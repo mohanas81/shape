@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.anas.shape.repo.ShapeRepository">
+    <resultMap id="ShapeResult" type="com.anas.shape.querybean.Shape"
+               autoMapping="true"/>
+    <sql id="tableCol">
+        id,
+        <include refid="insertCol"/>
+    </sql>
+    <sql id="insertCol">
+        category_id,
+        requirement,
+        area
+    </sql>
+
+    <insert id="insert" parameterType="com.anas.shape.querybean.Shape"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO  shape (
+        <include refid="insertCol"/>
+        )VALUES(
+        #{categoriId},
+        #{requirement},
+        #{area}
+        )
+    </insert>
+    <select id="query" resultMap="ShapeResult">
+        SELECT
+        <include refid="tableCol"/>
+        FROM shape
+        order by id desc
+    </select>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.anas.shape.repo.UserRepository">
+    <resultMap id="ShapeResult" type="com.anas.shape.model.User"
+               autoMapping="true"/>
+    <sql id="tableCol">
+        id,
+        <include refid="insertCol"/>
+    </sql>
+    <sql id="insertCol">
+        name,
+        username,
+        email,
+        password,
+        roles
+    </sql>
+
+    <insert id="save" parameterType="com.anas.shape.model.User"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO  shape (
+        <include refid="insertCol"/>
+        )VALUES(
+        #{name},
+        #{username},
+        #{email},
+        #{password},
+        #{roles},
+        )
+    </insert>
+    <select id="query" resultMap="ShapeResult">
+        SELECT
+        <include refid="tableCol"/>
+        FROM users
+        order by id desc
+    </select>
+    <select id="findByUsername" resultMap="ShapeResult">
+        SELECT
+        <include refid="tableCol"/>
+        FROM users
+        where username=#{username}
+    </select>
+    <select id="findById" resultMap="ShapeResult">
+        SELECT
+        <include refid="tableCol"/>
+        FROM users
+        where id=#{id}
+    </select>
+    <select id="findByEmail" resultMap="ShapeResult">
+        SELECT
+        <include refid="tableCol"/>
+        FROM users
+        where email=#{email}
+    </select>
+    <delete id="deleteByUsername">
+        DELETE from users where username=#{username}
+    </delete>
+
+</mapper>
